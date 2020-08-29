@@ -9,11 +9,10 @@ import twitter_credentials
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
+import argparse
 
 
 # TWITTER AUTHENTICATOR
-
-
 class TwitterAuthenticator():
     # Class constructor or initialization method.
     def __init__( self, CONSUMER_KEY, CONSUMER_SECRET, ACCESS_TOKEN, ACCESS_TOKEN_SECRET ):
@@ -27,15 +26,14 @@ class TwitterAuthenticator():
             print("Error: Authentication Failed")
 
     # method to access OAuthHandler object
-
-    def get(self):
+    def get( self ):
         return self.auth
 
 
 # # # # TWITTER CLIENT # # # #
 class TwitterClient():
 
-    def __init__(self, CONSUMER_KEY, CONSUMER_SECRET, ACCESS_TOKEN, ACCESS_TOKEN_SECRET):
+    def __init__( self, CONSUMER_KEY, CONSUMER_SECRET, ACCESS_TOKEN, ACCESS_TOKEN_SECRET ):
         # create object of TwitterAuthenticator class
         self.twitter_authenticator = TwitterAuthenticator(CONSUMER_KEY, CONSUMER_SECRET,
                                                           ACCESS_TOKEN, ACCESS_TOKEN_SECRET)
@@ -61,19 +59,20 @@ class TweetAnalyzer():
     """
     Functionality for analyzing and categorizing content from tweets.
     """
+
     # clean tweets using regex function(removing hyperlink, #, RT, @mentions,numbers,lowercase,special characters)
-    def clean_tweet(self, tweet):
+    def clean_tweet( self, tweet ):
         tweet = ' '.join(re.sub(r"(@[A-Za-z0-9]+)|([^0-9A-Za-z \t])|(\w+:\/\/\S+)|(\@\w+|\#)|("
                                 r"http\S+|www\S+|https\S+)|(^RT[\s]+)", " ", tweet).split())
         return tweet
 
     # method to take data in dataframe
-    def tweets_to_data_frame(self, filename):
+    def tweets_to_data_frame( self, filename ):
         df = pd.read_csv(filename, sep=None, engine='python')
         return df
 
     # method to calculate sentiment polarity of clean tweets using Textblob's sentiment method
-    def analyze_sentiment(self, tweet):
+    def analyze_sentiment( self, tweet ):
         # create object for Textblob method
         analysis = TextBlob(self.clean_tweet(tweet))
         # set sentiments by polarity
@@ -84,9 +83,9 @@ class TweetAnalyzer():
         else:
             return 'negative'
 
-    def calculate_percentage(self, number_of_tweets, total_tweets):
+    def calculate_percentage( self, number_of_tweets, total_tweets ):
 
-         return  100 * number_of_tweets / total_tweets
+        return 100 * number_of_tweets / total_tweets
 
     # method to plot sentiments of hashtag we provide
     def visualization( self, sentiments, hashtag ):
@@ -105,31 +104,53 @@ class TweetAnalyzer():
                 neutral_tweets += 1
             total_tweets += 1
         # print tweets as per sentiments
-        print('positive_tweets :', positive_tweets ,
+        print('positive_tweets :', positive_tweets,
               'negative_tweets :', negative_tweets,
               'neutral_tweets :', neutral_tweets,
               'total_tweets  :', total_tweets)
 
         # print percentages of sentiments
-        print("Positive tweets percentage: {} %".format(self.calculate_percentage(positive_tweets,total_tweets)))
-        print("Negative tweets percentage: {} %".format(self.calculate_percentage(negative_tweets,total_tweets)))
-        print("Neutral tweets percentage: {} %".format(self.calculate_percentage(neutral_tweets,total_tweets)))
+        print("Positive tweets percentage: {} %".format(self.calculate_percentage(positive_tweets, total_tweets)))
+        print("Negative tweets percentage: {} %".format(self.calculate_percentage(negative_tweets, total_tweets)))
+        print("Neutral tweets percentage: {} %".format(self.calculate_percentage(neutral_tweets, total_tweets)))
 
         # plot piechart using matplotlib.plt
         labels = 'positive_tweets', 'negative_tweets', 'neutral_tweets'
-        sizes = [self.calculate_percentage(positive_tweets,total_tweets),
-                 self.calculate_percentage(negative_tweets,total_tweets),
-                 self.calculate_percentage(neutral_tweets,total_tweets)]
+        sizes = [self.calculate_percentage(positive_tweets, total_tweets),
+                 self.calculate_percentage(negative_tweets, total_tweets),
+                 self.calculate_percentage(neutral_tweets, total_tweets)]
 
-        fig1, ax1 = plt.subplots() # plot output on chart
+        fig1, ax1 = plt.subplots()  # plot output on chart
         ax1.pie(sizes, labels=labels, autopct='%1.1f%%', shadow=True, startangle=90)
         ax1.axis('equal')  # Equal aspect ratio ensures that pie is drawn as a circle.
         plt.title('Twitter_sentiment_analysis of \n' + str(hashtag) + '\n hashtags')
 
-        plt.show() # display chart
+        plt.show()  # display chart
+
+
+# method to take arguments from command line using
+def parsearguments():
+    # Construct the argument parser
+    parser = argparse.ArgumentParser()
+
+    parser.add_argument("-H", "--hashtag_list", type=str, help='comma seperated list of hashtags to analyse',
+                        required=True)
+    parser.add_argument("-s", "--since_date", type=str, help='since date', required=True)
+    parser.add_argument("-u", "--until_date", type=str, help='until date', required=True)
+    parser.add_argument("-g", "--geocode", help='geocode of india', default="20.5937,78.9629,3000km")
+    parser.add_argument("-l", "--language", help='language of tweets', default="en")
+    parser.add_argument("-f", "--file", type=str, help='filename to store tweets', required=True)
+    parser.add_argument("-c", "--count", type=int, help='no.of tweets required', required=True)
+
+    return parser.parse_args()
 
 
 if __name__ == '__main__':
+
+    args = parsearguments()
+
+    # construct hashtag_list
+    hashtag_list = [item for item in args.hashtag_list.split(',')]
 
     # create object of TwitterClient class
     twitter_client = TwitterClient(twitter_credentials.CONSUMER_KEY,
@@ -140,7 +161,11 @@ if __name__ == '__main__':
     tweet_analyzer = TweetAnalyzer()
 
     # Open/create a file to append data to
-    filename = 'data.csv'  # default filename
+    filename = args.file  # default filename
+    # add file extention if required
+    if '.csv' not in filename:
+        filename = filename + '.csv'
+
     csvFile = open(filename, 'w')  # open csv with write mode
     csvWriter = csv.writer(csvFile)
     # declare columns to add as header to csv file
@@ -149,19 +174,19 @@ if __name__ == '__main__':
 
     # use DictWriter of csv to add columns as fieldnames
     writer = csv.DictWriter(csvFile, fieldnames=columns)
-    writer.writeheader() # pass columns as header of file
+    writer.writeheader()  # pass columns as header of file
 
     # dictionary to store unique tweets
     unique_tweets = {}
     # declare keywords to search tweets in hashtag-list
-    hashtag_list = ["Sushant Singh Rajput", "#JusticeforSushantSingRajput"]
+    # hashtag_list = ["Sushant Singh Rajput", "#JusticeforSushantSingRajput"]
 
     for tweet in twitter_client.get_data(my_hashtag_list=hashtag_list,
-                                         my_since="2020-8-20",
-                                         my_geocode="20.5937,78.9629,3000km",
-                                         my_until="2020-8-29",
-                                         my_lang='en',
-                                         my_count=500).items(500):
+                                         my_since=args.since_date,
+                                         my_geocode=args.geocode,
+                                         my_until=args.until_date,
+                                         my_lang=args.language,
+                                         my_count=args.count).items(args.count):
         # only unique tweets
         if tweet.text not in unique_tweets:
             unique_tweets[tweet.text] = 1
@@ -179,7 +204,7 @@ if __name__ == '__main__':
                                 tweet.user.description,
                                 tweet.user.url,
                                 tweet.lang])
-    #close file
+    # close file
     csvFile.close()
     # call tweets_to_data_frame function
     df = tweet_analyzer.tweets_to_data_frame(filename)
