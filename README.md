@@ -61,9 +61,9 @@ Sample __output__ should be like this :
 ## Files description
 Bellow is information about file that directory contains :
 
-- __code__ file is `Sentiment_Analysis.py`
-- __Sample Data__ collected in`data.csv`
-- All your __twitter credentials__ should be define in file `twitter_credentials.py`
+- `Sentiment_Analysis.py` is __code__ file to run. 
+- `data.csv` __Sample Data__ collected in csv file.
+- `twitter_credentials.py` All your __twitter credentials__ should be define in this file. 
 
 
 ## Contributing to project
