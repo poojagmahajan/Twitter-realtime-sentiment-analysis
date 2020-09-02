@@ -48,7 +48,7 @@ optional arguments:
 
 Sample __input__ should be like :
 ```
--f data.csv -H "Sushant Singh Rajput,#JusticeforSushantSingRajput" -s 2020-08-23 -u 2020-08-29 -c 100
+python3.8 Sentiment_Analysis.py -f data.csv -H "Sushant Singh Rajput,#JusticeforSushantSingRajput" -s 2020-08-23 -u 2020-08-29 -c 100
 
 ```
 
