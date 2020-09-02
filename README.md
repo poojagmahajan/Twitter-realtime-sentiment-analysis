@@ -9,7 +9,7 @@ Here i am doing tweeter sentiment analysis on topic or keyword related to Sushan
 - Any Editor(I used pycharm)
 
 ## Installation
-- Pandas <pip install pandas>
+- Pandas '<pip install pandas>'
 - numpy  pip install numpy
 - Tweepy pip install tweepy
 - Textblob pip install TextBlob
