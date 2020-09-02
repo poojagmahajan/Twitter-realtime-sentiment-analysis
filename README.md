@@ -1,8 +1,8 @@
 # Twitter_Sentiment_Analysis
 
 ## Introduction
-Sentiment analysis on twitter data related to certain topic using keywors.
-Here i am doing tweeter sentiment analysis on topic or keyword related to Sushant Singh Rajput.
+Sentiment analysis on twitter data related to certain topic using specific keywords.
+You can give any keywords or hashtags as input to get data for analysis.
 
 ## Requirements
 - python >3.5
@@ -27,16 +27,19 @@ To contribute to <project_name>, follow these steps:
 - Push to the original branch: `git push origin <project_name>/<location>`
 - Create the pull request.
 
-Please fork and give credits if you use my code. :)
+Please fork and give credits if you use my code. :-)
+
 Alternatively see the GitHub documentation on [creating a pull request](https://docs.github.com/en/github/collaborating-with-issues-and-pull-requests/creating-a-pull-request)
 
 ## About Directory 
 Bellow is information about file that directory contains :
 
-- code file is `Sentiment_Analysis.py`
-- Sample Data collected in`data.csv`
-- All your twitter credentials should be define in file `twitter_credentials.py`
+- __code__ file is `Sentiment_Analysis.py`
+- __Sample Data__ collected in`data.csv`
+- All your __twitter credentials__ should be define in file `twitter_credentials.py`
+
 - Sample __output__ should be like this :
+
 ![output_piechart](https://github.com/poojagmahajan/Twitter_Sentiment_Analysis/blob/master/output_piechart.png)
 
  
