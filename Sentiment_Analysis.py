@@ -157,14 +157,14 @@ def parse_arguments():
                         help='since date', required=True)
     parser.add_argument("-u", "--until_date", type=str,
                         help='until date', required=True)
-    parser.add_argument("-g", "--geocode", help='geocode of india',
+    parser.add_argument("-g", "--geocode", help='geographical code of india',
                         default="20.5937,78.9629,3000km")
     parser.add_argument("-l", "--language", help='language of tweets',
                         default="en")
     parser.add_argument("-f", "--file", type=str,
                         help='filename to store tweets', required=True)
     parser.add_argument("-c", "--count", type=int,
-                        help='no.of tweets required', required=True)
+                        help='number of tweets required', required=True)
 
     return parser.parse_args()
 
