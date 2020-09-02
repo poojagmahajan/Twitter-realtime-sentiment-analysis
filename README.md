@@ -54,7 +54,8 @@ Sample __input__ should be like :
 
 Sample __output__ should be like this :
 
-![output_piechart](https://github.com/poojagmahajan/Twitter_Sentiment_Analysis/blob/master/output_piechart.png =100x20)
+
+![output_piechart](https://github.com/poojagmahajan/Twitter_Sentiment_Analysis/blob/master/output_piechart.png)
 
 
 ## Files description
