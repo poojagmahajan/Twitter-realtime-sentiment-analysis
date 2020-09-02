@@ -156,7 +156,7 @@ def parse_arguments():
     parser.add_argument("-s", "--since_date", type=str,
                         help='since date', required=True)
     parser.add_argument("-u", "--until_date", type=str,
-                        elp='until date', required=True)
+                        help='until date', required=True)
     parser.add_argument("-g", "--geocode", help='geocode of india',
                         default="20.5937,78.9629,3000km")
     parser.add_argument("-l", "--language", help='language of tweets',
