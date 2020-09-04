@@ -2,7 +2,7 @@
 
 ## Introduction
 Sentiment analysis on twitter data related to certain topic using specific keywords.
-You can give any keywords or hashtags as input to get data for analysis.
+You can give any keywords or hashtags as input to get data for analysis. Here i am doing analysis on sushat singh rajput case.
 
 ## Requirements
 - python >3.5
@@ -62,7 +62,7 @@ Sample __output__ should be like this :
 Bellow is information about file that directory contains :
 
 - `Sentiment_Analysis.py` is __code__ file to run. 
-- `data.csv` __Sample Data__ collected in csv file.
+- `data.csv` __Sample Data__ collected in csv file using keyword "sushant singh rajput".
 - `twitter_credentials.py` All your __twitter credentials__ should be define in this file. 
 
 
